@@ -6,6 +6,8 @@
 #include "boost_1_86_0/boost/beast.hpp"
 #include "json.hpp"
 
+#include "../config.h"
+
 #include <chrono>
 #include <thread>
 
@@ -45,7 +47,7 @@ public:
         return res;
     }
     
-    std::string _token = "bot token";
+    std::string _token = token;
     std::string _url = "api.telegram.org";
 
     int64_t last_update_id{};
