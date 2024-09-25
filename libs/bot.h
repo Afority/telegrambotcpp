@@ -45,7 +45,7 @@ public:
         return res;
     }
     
-    std::string _token = "7263851876:AAEM2YAISTD4Xhx750aniKJZfIOJ3Cg5HdQ";
+    std::string _token = "bot token";
     std::string _url = "api.telegram.org";
 
     int64_t last_update_id{};
