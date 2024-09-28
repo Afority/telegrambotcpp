@@ -6,8 +6,10 @@ import datetime
 import json
 import time
 
+work_directory = "/home/almas/Рабочий стол/telegramapicpp/utils/"
+
 def logging(mode, text):
-    with open("errors.txt", "a", encoding="UTF-8") as file:
+    with open(work_directory+"errors.txt", "a", encoding="UTF-8") as file:
         file.write(f"\n[{mode}] {datetime.datetime.now()} {text}")
 
 def get_xlsx():
@@ -48,7 +50,7 @@ def get_xlsx():
         headers=headers,
     )
     # save
-    with open("1.xlsx", "wb") as file:
+    with open(work_directory+"1.xlsx", "wb") as file:
         file.write(response.content)
 
 def get_schedule2():
@@ -56,7 +58,7 @@ def get_schedule2():
     with open("/home/almas/Рабочий стол/telegramapicpp/lessons/lessons.json", 'r', encoding="UTF-8") as file:
         lessons = json.load(file)
     # sharaga 2
-    df = pd.read_excel("1.xlsx", sheet_name="ТМ(9) и СП")
+    df = pd.read_excel(work_directory+"1.xlsx", sheet_name="ТМ(9) и СП")
     index = 1
     group = "ТМ1124"
     lessons[group] = {}
@@ -65,7 +67,10 @@ def get_schedule2():
             index = i
             break
     # ищем индекс недели
-    week = 4
+    with open(work_directory+"config.json") as file:
+        config = json.load(file)
+    week = config.get("parser_week", 1)
+    
     for i in range(index, 10):
         columns = [df.columns[i]]
         schedule = df[columns]
@@ -211,7 +216,7 @@ def get_schedule1(login, password, group):
 
 
 if __name__ == "__main__":
-    with open("/home/almas/Рабочий стол/telegramapicpp/utils/config.json", "r", encoding="UTF-8") as file:
+    with open(work_directory+"config.json", "r", encoding="UTF-8") as file:
         data: dict = json.load(file)
         for user in data["user"]:
             get_schedule1(login=user[0], password=user[1], group=user[2])

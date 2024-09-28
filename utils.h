@@ -2,7 +2,7 @@
 #include <sstream>
 #include <iomanip>
 #include <vector>
-#include "libs/json.hpp"
+#include "../json/json.hpp"
 #include <iostream>
 
 struct InlineKeyboardButton{
@@ -31,15 +31,10 @@ struct Keyboard{
                 nlohmann::json button1;
                 button1["text"] = button.text;
                 button1["callback_data"] = button.callback_data;
-                
-                std::cout << "text = " << button.text << "\n";
-                std::cout << "data = " << button.callback_data << "\n";
-
                 keyboard["inline_keyboard"][row_counter].push_back(button1);
             }
             ++row_counter;
         }
-        std::cout << keyboard << "\n";
         return to_serialize(keyboard.dump());
     }
 
